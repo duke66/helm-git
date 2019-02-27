@@ -17,7 +17,7 @@ TMPDIR="$(mktemp -d)"
 cd $TMPDIR
 
 git init --quiet
-git remote add origin https://$AUTH@$SRV:$REPO.git
+git remote add origin https://$AUTH@$SRV/$REPO.git
 git pull --depth=1 --quiet origin $BRANCH
 
 if [ -f $FILEPATH ]; then # if a file named $FILEPATH exists
