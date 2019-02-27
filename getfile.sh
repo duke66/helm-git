@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-set -e
+set -e 
 
 URI=$@ # eg: gitlab://username:pass@srv/project:master/kubernetes/helm-chart
 PROVIDER=$(echo $URI | cut -d: -f1) # eg: gitlab
