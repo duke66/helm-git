@@ -21,7 +21,7 @@ git remote add origin https://$AUTH@$SRV/$REPO.git
 git pull --depth=1 --quiet origin $BRANCH
 
 if [ -f $FILEPATH ]; then # if a file named $FILEPATH exists
-  cat $FILEPATH | sed 's/<--CI_JOB_TOKEN-->/'"${CI_JOB_TOKEN}"'/'
+  cat $FILEPATH | sed 's/__CI_JOB_TOKEN__/'"${CI_JOB_TOKEN}"'/'
 else
   echo "Error in plugin 'helm-git': $BRANCH:$FILEPATH does not exists" >&2
   find $TMPDIR
