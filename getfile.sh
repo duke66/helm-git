@@ -1,21 +1,23 @@
 #!/usr/bin/env sh
 
-set -e
+set -x
 
-URI=$@ # eg: gitlab://username/project:master/kubernetes/helm-chart
+URI=$@ # eg: gitlab://username:pass@srv/project:master/kubernetes/helm-chart
 PROVIDER=$(echo $URI | cut -d: -f1) # eg: gitlab
-REPO=$(echo $URI | cut -d: -f2 | sed -e "s/\/\///") # eg: username/project
-BRANCH=$(echo $URI | cut -d: -f3 | cut -d/ -f1) # eg: master
-FILEPATH=$(echo $URI | cut -d: -f3 | sed -e "s/$BRANCH\///") # eg: kubernetes/helm-chart
+AUTH=$(echo $URI | cut -d: -f2,3 | sed -e "s/\/\///" | cut -d\@ -f1) # eg: gitlab
+SRV=$(echo $URI | cut -d\@ -f2 | cut -d\/ -f1) # eg: gitlab
+REPO=$(echo $URI | cut -d\@ -f2 | cut -d\/ -f2,3,4,5 | cut -d: -f1) 
+BRANCH=$(echo $URI | cut -d\/ -f5| cut -d: -f2)
+FILEPATH=$(echo $URI | cut -d\/ -f6,7,8,9,10,11,12,13 | sed -e "s/$BRANCH\///") # eg: kubernetes/helm-chart
 
-# echo $URI $REPO $BRANCH $FILEPATH >&2
+echo $URI $REPO $BRANCH $FILEPATH >&2
 
 # make a temporary dir
 TMPDIR="$(mktemp -d)"
 cd $TMPDIR
 
 git init --quiet
-git remote add origin git@$PROVIDER:$REPO.git
+git remote add origin git@$SRV:$REPO.git
 git pull --depth=1 --quiet origin $BRANCH
 
 if [ -f $FILEPATH ]; then # if a file named $FILEPATH exists
