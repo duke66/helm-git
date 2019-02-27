@@ -23,6 +23,7 @@ git pull --depth=1 --quiet origin $BRANCH
 find ./
 
 if [ -f $FILEPATH ]; then # if a file named $FILEPATH exists
+  ls $FILEPATH
   cat $FILEPATH
 else
   echo "Error in plugin 'helm-git': $BRANCH:$FILEPATH does not exists" >&2
