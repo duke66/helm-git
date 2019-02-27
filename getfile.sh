@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -x
+set -e
 
 URI=$@ # eg: gitlab://username:pass@srv/project:master/kubernetes/helm-chart
 PROVIDER=$(echo $URI | cut -d: -f1) # eg: gitlab
@@ -20,13 +20,7 @@ git init --quiet
 git remote add origin https://$AUTH@$SRV/$REPO.git
 git pull --depth=1 --quiet origin $BRANCH
 
-find ./
-
-git status
-find $TMPDIR
-
 if [ -f $FILEPATH ]; then # if a file named $FILEPATH exists
-  ls $FILEPATH
   cat $FILEPATH
 else
   echo "Error in plugin 'helm-git': $BRANCH:$FILEPATH does not exists" >&2
