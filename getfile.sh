@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#set -x
+set -x
 
 URI=$@ # eg: gitlab://username:pass@srv/project:master/kubernetes/helm-chart
 PROVIDER=$(echo $URI | cut -d: -f1) # eg: gitlab
@@ -34,4 +34,4 @@ else
 fi
 
 # remove the temporary dir
-rm -rf $TMPDIR
+#rm -rf $TMPDIR
