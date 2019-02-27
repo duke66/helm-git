@@ -10,14 +10,14 @@ REPO=$(echo $URI | cut -d\@ -f2 | cut -d\/ -f2,3,4,5 | cut -d: -f1)
 BRANCH=$(echo $URI | cut -d\/ -f5| cut -d: -f2)
 FILEPATH=$(echo $URI | cut -d\/ -f6,7,8,9,10,11,12,13 | sed -e "s/$BRANCH\///") # eg: kubernetes/helm-chart
 
-echo $URI $REPO $BRANCH $FILEPATH >&2
+echo $URI $REPO $BRANCH $FILEPATH 
 
 # make a temporary dir
 TMPDIR="$(mktemp -d)"
 cd $TMPDIR
 
 git init --quiet
-git remote add origin https@$SRV:$REPO.git
+git remote add origin https://AUTH@$SRV:$REPO.git
 git pull --depth=1 --quiet origin $BRANCH
 
 if [ -f $FILEPATH ]; then # if a file named $FILEPATH exists
