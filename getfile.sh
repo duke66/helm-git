@@ -24,6 +24,7 @@ if [ -f $FILEPATH ]; then # if a file named $FILEPATH exists
   cat $FILEPATH
 else
   echo "Error in plugin 'helm-git': $BRANCH:$FILEPATH does not exists" >&2
+  find $TMPDIR
   exit 1
 fi
 
